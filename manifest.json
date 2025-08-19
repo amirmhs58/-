@@ -1,0 +1,25 @@
+{
+  "name": "محاسبه‌گر سیستم خورشیدی",
+  "short_name": "حسابگر خورشیدی",
+  "description": "یک برنامه کاربردی وب برای محاسبه و طراحی سیستم برق خورشیدی مورد نیاز برای یک واحد مسکونی بر اساس میزان مصرف برق و مشخصات فنی تجهیزات.",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#ffffff",
+  "lang": "fa-IR",
+  "dir": "rtl"
+}
