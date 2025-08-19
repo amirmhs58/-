@@ -1,18 +1,33 @@
-const CACHE_NAME = 'solar-calculator-v2';
+const CACHE_NAME = 'solar-calculator-v1';
 const urlsToCache = [
   '/',
   './index.html',
+  './index.tsx',
+  './App.tsx',
+  './types.ts',
+  './components/InputField.tsx',
+  './components/ResultCard.tsx',
+  './components/Tooltip.tsx',
   './manifest.json',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  'https://cdn.tailwindcss.com',
+  'https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap',
+  'https://esm.sh/react-dom@^19.1.1/',
+  'https://esm.sh/uuid@^11.1.0',
+  'https://esm.sh/recharts@^3.1.2',
+  'https://esm.sh/react@^19.1.1/',
+  'https://esm.sh/react@^19.1.1'
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Opened cache and caching shell assets');
-        return cache.addAll(urlsToCache);
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache).catch(error => {
+          console.error('Failed to cache one or more resources:', error);
+        });
       })
   );
 });
@@ -30,7 +45,7 @@ self.addEventListener('fetch', event => {
         return fetch(event.request).then(
           networkResponse => {
             // Check if we received a valid response
-            if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic' && !networkResponse.type.startsWith('cors')) {
+            if (!networkResponse || networkResponse.status !== 200) {
               return networkResponse;
             }
             
@@ -45,8 +60,6 @@ self.addEventListener('fetch', event => {
           }
         ).catch(error => {
             console.log('Fetch failed; network request failed.', error);
-            // Optionally, return a fallback page for offline mode if the request was for navigation
-            // For now, we just let the browser handle the failed fetch.
         });
       })
   );
@@ -59,7 +72,6 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
-            console.log('Deleting old cache:', cacheName);
             return caches.delete(cacheName); // Deleting old caches
           }
         })
